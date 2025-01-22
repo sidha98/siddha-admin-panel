@@ -1,0 +1,49 @@
+/* Sidebar.scss */
+
+.sidebar {
+ display: flex;
+}
+
+.appBar {
+ position: fixed;
+ z-index: 1;
+ transition: width 0.3s ease, margin 0.3s ease;
+}
+
+.drawer {
+ width: 240px;
+ flex-shrink: 0;
+ white-space: nowrap;
+ box-sizing: border-box;
+ transition: width 0.3s ease, margin 0.3s ease;
+}
+
+.drawer.open {
+ width: 240px;
+}
+
+.drawer.closed {
+ width: calc(56px + 1px); /* Adjust based on the collapsed sidebar width */
+}
+
+.drawerHeader {
+ display: flex;
+ justify-content: flex-end;
+ padding: 0 1rem;
+}
+
+.mainContent {
+ flex-grow: 1;
+ padding: 1rem;
+ margin-left: 240px;
+ transition: margin-left 0.3s ease;
+}
+
+.mainContent.closed {
+ margin-left: 56px; /* Adjust this based on the collapsed sidebar width */
+}
+@media (max-width: 480px){
+    .drawer.closed{
+        width: 0px;
+    }
+}

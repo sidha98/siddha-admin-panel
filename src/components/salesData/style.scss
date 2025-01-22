@@ -1,0 +1,377 @@
+.sales-data {
+ .table-title {
+   font-size: 24px;
+   font-weight: bold;
+   color: #333;
+   margin: 0 0;
+ }
+
+ .filter-container {
+   display: flex;
+   // justify-content: center;
+   // align-items: center;
+   // margin-bottom: 20px;
+   gap: 10px;
+   flex-wrap: wrap; // Allow filters to wrap on smaller screens
+
+   .filter-input {
+     // padding: 10px 15px;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     font-size: 10px;
+   }
+
+   .filter-buttons {
+     display: flex;
+     gap: 10px;
+
+     .apply-btn,
+     .reset-btn {
+       // padding: 10px 15px;
+       border: none;
+       border-radius: 5px;
+       cursor: pointer;
+       font-size: 10px;
+       transition: background-color 0.3s;
+
+       &:hover {
+         opacity: 0.9;
+       }
+     }
+
+     .apply-btn {
+       background-color: grey;
+       color: white;
+     }
+
+     .reset-btn {
+       background-color: #e9574d;
+       color: white;
+     }
+   }
+ }
+
+ .table-container {
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
+   overflow: hidden;
+   ::-webkit-scrollbar {
+    width: 10px; /* Adjust the width of the scrollbar */
+    height: 10px; /* Adjust the height of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Hide the scrollbar background */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 5px; /* Make the thumb rounded */
+    border: 2px solid transparent; /* Optional: Add space around the thumb */
+    background-clip: content-box; /* Ensures the border doesn't overlap the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darken the thumb on hover */
+}
+
+   .scrollable-table {
+     max-height: 350px;
+     overflow-y: auto;
+     overflow-x: hidden;
+     
+   }
+
+   .sales-table {
+     width: 100%;
+     border-collapse: separate;
+
+   }
+
+   thead {
+     position: sticky;
+     top: 0;
+     background-color: #f8f9fa;
+     text-align: center;
+     padding: 10px;
+     font-size: 16px;
+     z-index: 1;
+
+     tr th {
+       padding: 0 0;
+       font-size: 10px;
+       // border-bottom: 2px solid black;
+     }
+   }
+
+   tbody tr {
+     td{
+       font-size: 10px;
+       padding: 0 0;
+     }
+     &:hover {
+       transform: none;
+       box-shadow: none;
+     }
+   }
+
+   tbody td {
+     text-align: center;
+     border-top: 1px solid #ddd;
+     padding: 5px;
+   }
+ }
+
+ .pagination {
+   display: flex;
+   justify-content: end;
+   margin-right: 2%;
+   align-items: center;
+   margin-top: 5px;
+   font-size: 10px;
+   gap: 10px;
+   flex-wrap: wrap; 
+   .page-btn,
+   .prev-block-btn,
+   .next-block-btn {
+     // padding: 10px 15px;
+     border: 1px solid #ddd;
+     background-color: white;
+     cursor: pointer;
+     border-radius: 5px;
+     transition: background-color 0.3s;
+
+     &:hover {
+       // background-color: #007bff;
+       // color: white;
+     }
+
+     &.active {
+       // background-color: #007bff;
+       color: white;
+     }
+
+     &:disabled {
+       background-color: #f4f4f4;
+       color: #999;
+       cursor: not-allowed;
+     }
+   }
+ }
+
+ // Media Queries for Responsiveness
+
+ @media (max-width: 768px) {
+   .table-title {
+     font-size: 20px;
+    //  text-align: center;
+   }
+
+   .filter-container {
+     flex-direction: column;
+     align-items: stretch;
+
+     .filter-buttons {
+       justify-content: center;
+       flex-wrap: wrap;
+     }
+
+     .filter-input {
+       width: 100%;
+     }
+   }
+
+   .table-container {
+     .sales-table {
+       font-size: 12px; // Reduce font size for smaller screens
+     }
+   }
+
+   .pagination {
+     // flex-direction: column;
+     gap: 5px;
+
+     .page-btn,
+     .prev-block-btn,
+     .next-block-btn {
+       // width: 100%; // Full-width buttons for better usability
+       text-align: center;
+     }
+   }
+ }
+
+ @media (max-width: 480px) {
+   .table-title {
+     font-size: 18px;
+   }
+
+   .filter-container {
+     gap: 5px;
+
+     .filter-input {
+       font-size: 12px; // Smaller input font size
+     }
+
+     .filter-buttons {
+       // flex-direction: column;
+
+       .apply-btn,
+       .reset-btn {
+         font-size: 12px;
+         padding: 8px;
+       }
+     }
+   }
+
+   .table-container {
+     .sales-table {
+       font-size: 10px; // Further reduce font size
+     }
+   }
+
+   .pagination {
+     .page-btn,
+     .prev-block-btn,
+     .next-block-btn {
+       font-size: 12px; // Smaller font for buttons
+     }
+   }
+ }
+}
+.sales-data {
+ .table-title {
+   font-size: 24px;
+   font-weight: bold;
+   color: #333;
+   margin: 0 0;
+ }
+
+ .filter-container {
+   display: flex;
+   gap: 10px;
+   flex-wrap: wrap; // Allow filters to wrap on smaller screens
+
+   .filter-input {
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     font-size: 0.7rem;
+   }
+
+   .filter-buttons {
+     display: flex;
+     gap: 10px;
+
+     .apply-btn,
+     .reset-btn {
+       border: none;
+       border-radius: 5px;
+       cursor: pointer;
+       font-size: 0.7rem;
+       transition: background-color 0.3s;
+
+       &:hover {
+         opacity: 0.9;
+       }
+     }
+
+     .apply-btn {
+       background-color: grey;
+       color: white;
+     }
+
+     .reset-btn {
+       background-color: #e9574d;
+       color: white;
+     }
+   }
+ }
+
+ .table-container {
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
+   overflow: hidden;
+
+   .scrollable-table {
+     max-height: 60vh;
+     overflow-y: auto;
+     overflow-x: hidden;
+   }
+
+   .sales-table {
+     width: 100%;
+     border-collapse: separate;
+
+     thead {
+       position: sticky;
+       top: 0;
+       background-color: #f8f9fa;
+       text-align: center;
+       padding: 10px;
+       font-size: 0.7rem;
+       z-index: 1;
+
+       tr th {
+         padding: 0 0;
+         font-size: 0.9rem;
+       }
+     }
+
+     tbody {
+       tr {
+         td {
+           font-size: 0.7rem;
+           padding: 0 0;
+         }
+
+         &:hover {
+           transform: none;
+           box-shadow: none;
+         }
+       }
+
+       td {
+         text-align: center;
+         border-top: 1px solid #ddd;
+         padding: 5px;
+       }
+     }
+   }
+ }
+
+ .pagination {
+   display: flex;
+   justify-content: end;
+   margin-right: 2%;
+   align-items: center;
+   margin-top: 5px;
+   font-size: 0.7rem;
+   gap: 10px;
+   flex-wrap: wrap; // Allow pagination buttons to wrap
+
+   .page-btn,
+   .prev-block-btn,
+   .next-block-btn {
+     border: 1px solid #ddd;
+     background-color: white;
+     cursor: pointer;
+     border-radius: 5px;
+     transition: background-color 0.3s;
+
+     &:hover {
+       // background-color: #007bff;
+       // color: white;
+     }
+
+     &.active {
+       // background-color: #007bff;
+       color: white;
+     }
+
+     &:disabled {
+       background-color: #f4f4f4;
+       color: #999;
+       cursor: not-allowed;
+     }
+   }
+ }
+}

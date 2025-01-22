@@ -1,0 +1,129 @@
+.profile {
+ width: 100%;
+ text-align: center;
+ height: 100%;
+ border-radius: 20px;
+
+ .container {
+     width: 50%;
+     background: #fff;
+     margin-top: 1rem;
+     padding: 1rem;
+     border-radius: 50px;
+     border: 2px solid snow;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1); 
+
+     .profile_img {
+         width: 7rem;
+         border-radius: 50%;
+         border: 2px solid snow;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.1); 
+         transition: transform 0.3s ease;
+
+         &:hover {
+             transform: scale(1.1);
+         }
+     }
+
+     .profile_detail {
+         display: flex;
+         flex-direction: column;
+         margin: 2rem;
+         text-align: center;
+         width: 90%;
+
+         .detail {
+             display: flex;
+             justify-content: center;
+
+             .detail_header {
+                 display: flex;
+                 flex-direction: column;
+                 font-size: 15px;
+                 font-weight: 500;
+                 padding-right: 2rem;
+
+                 span {
+                     margin: 0.5rem;
+                 }
+             }
+
+             .detail_content {
+                 display: flex;
+                 flex-direction: column;
+                 font-size: 15px;
+
+                 span {
+                     margin: 0.5rem;
+                 }
+             }
+         }
+     }
+ }
+
+ // Responsive Design
+ @media (max-width: 1024px) {
+     .container {
+         width: 70%;
+
+         .profile_img {
+             width: 8rem;
+         }
+
+         .profile_detail {
+             margin: 1.5rem;
+
+             .detail {
+                 // flex-direction: column;
+                 align-items: center;
+
+                 .detail_header, .detail_content {
+                     font-size: 14px;
+                     padding-right: 0;
+                     margin-bottom: 1rem;
+                 }
+             }
+         }
+     }
+ }
+
+ @media (max-width: 768px) {
+     .container {
+         width: 85%;
+
+         .profile_img {
+             width: 7rem;
+         }
+
+         .profile_detail {
+             margin: 1rem;
+
+             .detail {
+                 .detail_header, .detail_content {
+                     font-size: 13px;
+                 }
+             }
+         }
+     }
+ }
+
+ @media (max-width: 480px) {
+     .container {
+         width: 95%;
+
+         .profile_img {
+             width: 6rem;
+         }
+
+         .profile_detail {
+             margin: 0.5rem;
+
+             .detail {
+                 .detail_header, .detail_content {
+                     font-size: 12px;
+                 }
+             }
+         }
+     }
+ }
+}

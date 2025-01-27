@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import config from '../../config.dev.json'
+import config from '../../config'
 import "./style.scss";
-import { MdSkipNext ,MdSkipPrevious} from "react-icons/md";
+import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 
 import axios from "axios";
 import { CTable } from "@coreui/react";
@@ -9,8 +9,8 @@ import { CTable } from "@coreui/react";
 const backend_url = config.backend_url
 
 const ExtractionData = () => {
-  const [originalData, setOriginalData] = useState([]); 
-  const [filteredData, setFilteredData] = useState([]); 
+  const [originalData, setOriginalData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [columns] = useState([
     "Dealer Code",
     "Brand",
@@ -26,19 +26,19 @@ const ExtractionData = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 50; 
+  const rowsPerPage = 50;
 
   const fetchData = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${backend_url}/extraction/getExtractions`, {
-        params: { page: 1, limit: 100 }, 
+        params: { page: 1, limit: 100 },
       });
 
       if (response.status === 200) {
         const { records } = response.data;
-        setOriginalData(records.slice(1)); 
-        setFilteredData(records.slice(1)); 
+        setOriginalData(records.slice(1));
+        setFilteredData(records.slice(1));
       } else {
         setError(response.data.error || "Failed to fetch data");
       }
@@ -55,7 +55,7 @@ const ExtractionData = () => {
     const updatedFilters = { ...filters, [name]: value };
     setFilters(updatedFilters);
 
-    applyFilters(updatedFilters); 
+    applyFilters(updatedFilters);
   };
 
   const applyFilters = (filterParams) => {
@@ -77,13 +77,13 @@ const ExtractionData = () => {
       filtered = filtered.filter((row) => new Date(row.date) <= new Date(endDate));
     }
 
-    setFilteredData(filtered); 
+    setFilteredData(filtered);
     setCurrentPage(1); // Reset to first page when filters change
   };
 
   const resetFilters = () => {
     setFilters({ universal: "", startDate: "", endDate: "" });
-    setFilteredData(originalData); 
+    setFilteredData(originalData);
     setCurrentPage(1); // Reset to first page
   };
 
@@ -141,29 +141,29 @@ const ExtractionData = () => {
       </div>
       <div className="table-container">
         <div className="scrollable-table">
-         <CTable striped className="extraction-table">
+          <CTable striped className="extraction-table">
 
-         <thead>
-            <tr>
-              {columns.map((col, index) => (
-                <th key={index} className="table-header">
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {currentRows.map((row, index) => (
-              <tr key={index} className="table-row">
-                {columns.map((col, idx) => (
-                  <td key={idx} className="table-cell">
-                    {row[col] || "N/A"}
-                  </td>
+            <thead>
+              <tr>
+                {columns.map((col, index) => (
+                  <th key={index} className="table-header">
+                    {col}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-         </CTable>
+            </thead>
+            <tbody>
+              {currentRows.map((row, index) => (
+                <tr key={index} className="table-row">
+                  {columns.map((col, idx) => (
+                    <td key={idx} className="table-cell">
+                      {row[col] || "N/A"}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </CTable>
         </div>
       </div>
       <div className="pagination-controls">

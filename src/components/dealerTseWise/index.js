@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import config from "../../config.dev.json";
+import config from "../../config";
 import axios from "axios";
 import "./style.scss";
 import { cilArrowCircleLeft, cilArrowCircleRight } from "@coreui/icons";
@@ -57,7 +57,7 @@ const DealerTable = () => {
 
             setEmployeeCodes(employeeCodes); // Set employee codes
             console.log("Seperatly called Employee Codes:", employeeCodes);
-            
+
             const dataWithCodes = dealerData.map((dealer) => {
                 const employee = employeeCodes.find((emp) => emp.Name === dealer.TSE);
                 return {
@@ -263,10 +263,10 @@ const DealerTable = () => {
                                         item.TSE || "N/A"
                                     )}
                                 </td>
-                                <td>{editItemIndex === index ? <div style={{display:'flex',justifyContent:'center'}}> <input type="text" name="code" value={editFormData.code} onChange={handleInputChange} /></div> : item.code || "N/A"}</td>
-                                <td>{editItemIndex === index ? <div style={{display:'flex',justifyContent:'center'}}><input type="text" name="Dealer Code" value={editFormData["Dealer Code"]} onChange={handleInputChange} /> </div>: item["Dealer Code"]}</td>
-                                <td>{editItemIndex === index ?<div style={{display:'flex',justifyContent:'center'}}> <input type="text" name="DEALER NAME" value={editFormData["DEALER NAME"]} onChange={handleInputChange} /></div> : item["DEALER NAME"]}</td>
-                                <td>{editItemIndex === index ?<div style={{display:'flex',justifyContent:'center'}}> <input type="text" name="Area" value={editFormData.Area} onChange={handleInputChange} /></div> : item.Area}</td>
+                                <td>{editItemIndex === index ? <div style={{ display: 'flex', justifyContent: 'center' }}> <input type="text" name="code" value={editFormData.code} onChange={handleInputChange} /></div> : item.code || "N/A"}</td>
+                                <td>{editItemIndex === index ? <div style={{ display: 'flex', justifyContent: 'center' }}><input type="text" name="Dealer Code" value={editFormData["Dealer Code"]} onChange={handleInputChange} /> </div> : item["Dealer Code"]}</td>
+                                <td>{editItemIndex === index ? <div style={{ display: 'flex', justifyContent: 'center' }}> <input type="text" name="DEALER NAME" value={editFormData["DEALER NAME"]} onChange={handleInputChange} /></div> : item["DEALER NAME"]}</td>
+                                <td>{editItemIndex === index ? <div style={{ display: 'flex', justifyContent: 'center' }}> <input type="text" name="Area" value={editFormData.Area} onChange={handleInputChange} /></div> : item.Area}</td>
                                 <td className="action-btn">
                                     {editItemIndex === index ? (
                                         <button className="edit-btn" onClick={() => handleSaveEdit(index)}><MdOutlineFileDownload /></button>

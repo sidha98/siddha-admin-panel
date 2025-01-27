@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; 
-import config from '../../config.dev.json'
+import axios from 'axios';
+import config from '../../config'
 import './style.scss';
 import { CTable } from '@coreui/react';
 
 const backend_url = config.backend_url
 const Users = () => {
-  const [users, setUsers] = useState([]); 
-  const [filteredUsers, setFilteredUsers] = useState([]); 
-  const [loading, setLoading] = useState(true); 
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(''); 
-  const [selectedPosition, setSelectedPosition] = useState(''); 
-  const [currentPage, setCurrentPage] = useState(1); 
-  const [itemsPerPage] = useState(10); 
-  const positions = ['TSE', 'ZSM', 'ASM', 'ABM']; 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPosition, setSelectedPosition] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  const positions = ['TSE', 'ZSM', 'ASM', 'ABM'];
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`${backend_url}/users/getUser`); 
+        const response = await axios.get(`${backend_url}/users/getUser`);
         setUsers(response.data.data);
         setFilteredUsers(response.data.data);
-        setLoading(false); 
+        setLoading(false);
       } catch (err) {
         setError('Failed to fetch users');
         setLoading(false);
       }
     };
 
-    fetchUsers(); 
+    fetchUsers();
   }, []);
 
   useEffect(() => {
     const filtered = users.filter((user) => {
-      const matchesSearchTerm = 
+      const matchesSearchTerm =
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.position.toLowerCase().includes(searchTerm.toLowerCase());
@@ -55,11 +55,11 @@ const Users = () => {
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; 
+    return <div>{error}</div>;
   }
 
   return (
@@ -91,24 +91,24 @@ const Users = () => {
 
       <div className="table-container">
         <div className="scrollable-table">
-         <CTable striped className='user-table'>
-         <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Position</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((user) => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.position}</td>
+          <CTable striped className='user-table'>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Position</th>
               </tr>
-            ))}
-          </tbody>
-         </CTable>
+            </thead>
+            <tbody>
+              {currentItems.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.position}</td>
+                </tr>
+              ))}
+            </tbody>
+          </CTable>
         </div>
       </div>
     </div>

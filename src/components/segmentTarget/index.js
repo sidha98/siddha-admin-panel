@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import config from '../../config.dev.json'
+import config from '../../config'
 import './style.scss';
-import { MdOutlineSkipPrevious,MdOutlineSkipNext } from "react-icons/md";
+import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
 import { CTable } from '@coreui/react';
 
 const backend_url = config.backend_url
@@ -12,7 +12,7 @@ const SegmentTable = () => {
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 50; 
+  const limit = 50;
   const [searchTerm, setSearchTerm] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -49,18 +49,18 @@ const SegmentTable = () => {
     if (page < totalPages) setPage((prev) => prev + 1);
   };
   const applyFilters = () => {
-   setPage(1);
-   fetchSegments(1);
- };
- 
- const resetFilters = () => {
-   setSearchTerm("");
-   setStartDate("");
-   setEndDate("");
-   setPage(1);
-   fetchSegments(1);
- };
- 
+    setPage(1);
+    fetchSegments(1);
+  };
+
+  const resetFilters = () => {
+    setSearchTerm("");
+    setStartDate("");
+    setEndDate("");
+    setPage(1);
+    fetchSegments(1);
+  };
+
 
   return (
     <div className="segment-table-container">
@@ -98,39 +98,39 @@ const SegmentTable = () => {
       </div>
       <div className="table-container">
         <div className="scrollable-table">
-        <CTable striped className = "segment-table">
-        <thead>
-            <tr>
-              <th>Name</th>
-              <th>Segment</th>
-              <th>Target Value</th>
-              <th>Target Volume</th>
-              <th>Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            {segments.map((segment) => (
-              <tr key={segment._id}>
-                <td>{segment.Name}</td>
-                <td>{segment.Segment}</td>
-                <td>{segment['Target Value']}</td>
-                <td>{segment['Target Volume']}</td>
-                <td>{segment.Category}</td>
+          <CTable striped className="segment-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Segment</th>
+                <th>Target Value</th>
+                <th>Target Volume</th>
+                <th>Category</th>
               </tr>
-            ))}
-          </tbody>
-        </CTable>
+            </thead>
+            <tbody>
+              {segments.map((segment) => (
+                <tr key={segment._id}>
+                  <td>{segment.Name}</td>
+                  <td>{segment.Segment}</td>
+                  <td>{segment['Target Value']}</td>
+                  <td>{segment['Target Volume']}</td>
+                  <td>{segment.Category}</td>
+                </tr>
+              ))}
+            </tbody>
+          </CTable>
         </div>
       </div>
       <div className="pagination">
         <button onClick={handlePrevious} disabled={page === 1}>
-        <MdOutlineSkipPrevious />
+          <MdOutlineSkipPrevious />
         </button>
         <span>
           Page {page} of {totalPages}
         </span>
         <button onClick={handleNext} disabled={page === totalPages}>
-        <MdOutlineSkipNext />
+          <MdOutlineSkipNext />
 
         </button>
       </div>

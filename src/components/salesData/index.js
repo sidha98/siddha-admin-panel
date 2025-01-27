@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CTable } from '@coreui/react'
-import config from '../../config.dev.json'
+import config from '../../config'
 import "./style.scss";
 
 const backend_url = config.backend_url
@@ -109,36 +109,36 @@ const Sales_Data = () => {
 
       {/* Table */}
       <div className="table-container">
-      <div className="scrollable-table">
-    <CTable striped className="sales-table">
-      <thead>
-        <tr>
-          <th>STATE</th>
-          <th>TSE</th>
-          <th>ASM</th>
-          <th>SEGMENT</th>
-          <th>PRICE BAND</th>
-        </tr>
-      </thead>
-      <tbody>
-        {salesData.length > 0 ? (
-          salesData.map((item, index) => (
-            <tr key={item.id || index}>
-              <td>{item.STATE}</td>
-              <td>{item.TSE}</td>
-              <td>{item.ASM}</td>
-              <td>{item.SEGMENT}</td>
-              <td>{item["PRICE BAND"]}</td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan="5">No data available</td>
-          </tr>
-        )}
-      </tbody>
-    </CTable>
-  </div>
+        <div className="scrollable-table">
+          <CTable striped className="sales-table">
+            <thead>
+              <tr>
+                <th>STATE</th>
+                <th>TSE</th>
+                <th>ASM</th>
+                <th>SEGMENT</th>
+                <th>PRICE BAND</th>
+              </tr>
+            </thead>
+            <tbody>
+              {salesData.length > 0 ? (
+                salesData.map((item, index) => (
+                  <tr key={item.id || index}>
+                    <td>{item.STATE}</td>
+                    <td>{item.TSE}</td>
+                    <td>{item.ASM}</td>
+                    <td>{item.SEGMENT}</td>
+                    <td>{item["PRICE BAND"]}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5">No data available</td>
+                </tr>
+              )}
+            </tbody>
+          </CTable>
+        </div>
 
         {/* Pagination */}
         <div className="pagination">

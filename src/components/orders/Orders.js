@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import config from "../../config.dev.json";
+import config from "../../config";
 import "./style.scss";
 
 const backend_url = config.backend_url
@@ -63,7 +63,7 @@ const Orders = () => {
 
   return (
     <>
-    {/*<h2>Orders</h2>*/}
+      {/*<h2>Orders</h2>*/}
       <div className="orders-container">
         {showPopup && (
           <div className="popup">
@@ -81,59 +81,59 @@ const Orders = () => {
           </div>
         )}
         <div className="orders-sub">
-        {selectedOrder ? (
-          <>
-          <div className="title">Product List</div>
-          {orders
-            .filter((order) => order.DealerCode === selectedOrder.DealerCode)
-            .map((order) => (
-              <div key={order._id} className="order-box">
-                <div className="order-dets-top">
-                  <div className="order-dets-top-left">
-                    <p>{order._id}</p>
-                    <p>{new Date(order.OrderDate).toLocaleDateString()}</p>
-                    <p>
-                      {order.Products.length}N | {order.TotalPrice.toLocaleString()} INR
-                    </p>
-                    <div
-                      className={`order-status ${order.OrderStatus.toLowerCase()}`}
-                    >
-                      {order.OrderStatus.toUpperCase()}
-                    </div>
-                  </div>
-                  <div className="order-dets-top-right">
-                    {order.OrderStatus.toUpperCase() === "PENDING" && (
-                      <>
-                        <a>Edit</a>
-                        <a onClick={() => handleDeleteOrder(order._id)}>Delete</a>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div className="order-dets-bottom">
-                  {order.Products.map((product) => (
-                    <div key={product._id} className="order-products">
-                      <div className="order-products-left">
-                        <p className="product-name">
-                          {product.Model} | {product.ProductCode}
+          {selectedOrder ? (
+            <>
+              <div className="title">Product List</div>
+              {orders
+                .filter((order) => order.DealerCode === selectedOrder.DealerCode)
+                .map((order) => (
+                  <div key={order._id} className="order-box">
+                    <div className="order-dets-top">
+                      <div className="order-dets-top-left">
+                        <p>{order._id}</p>
+                        <p>{new Date(order.OrderDate).toLocaleDateString()}</p>
+                        <p>
+                          {order.Products.length}N | {order.TotalPrice.toLocaleString()} INR
                         </p>
-                        <p className="product-price">
-                          {product.Quantity} x {product.Price.toLocaleString()} INR
-                        </p>
+                        <div
+                          className={`order-status ${order.OrderStatus.toLowerCase()}`}
+                        >
+                          {order.OrderStatus.toUpperCase()}
+                        </div>
                       </div>
-                      <div className="order-products-right">
-                        <p className="order-total">
-                          {(product.Quantity * product.Price).toLocaleString()} INR
-                        </p>
+                      <div className="order-dets-top-right">
+                        {order.OrderStatus.toUpperCase() === "PENDING" && (
+                          <>
+                            <a>Edit</a>
+                            <a onClick={() => handleDeleteOrder(order._id)}>Delete</a>
+                          </>
+                        )}
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-        </>
-      ) : null}
-  </div>
+                    <div className="order-dets-bottom">
+                      {order.Products.map((product) => (
+                        <div key={product._id} className="order-products">
+                          <div className="order-products-left">
+                            <p className="product-name">
+                              {product.Model} | {product.ProductCode}
+                            </p>
+                            <p className="product-price">
+                              {product.Quantity} x {product.Price.toLocaleString()} INR
+                            </p>
+                          </div>
+                          <div className="order-products-right">
+                            <p className="order-total">
+                              {(product.Quantity * product.Price).toLocaleString()} INR
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+            </>
+          ) : null}
+        </div>
 
         <div className="orders-list">
           <div className="title">Dealers</div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import config from '../../config.dev.json'
+import config from '../../config';
 import "./style.scss";
 import { CTable } from "@coreui/react";
 

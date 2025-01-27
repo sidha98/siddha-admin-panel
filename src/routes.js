@@ -9,6 +9,7 @@ import Sales_Data from './components/salesData'
 import SegmentData from './components/segmentTarget'
 import Users from './components/users'
 import { element } from 'prop-types'
+import DealerTable from './components/dealerTseWise'
 
 
 const routes = [
@@ -21,6 +22,7 @@ const routes = [
   { path: '/segment', name: 'Segment Data', element: SegmentData },
   { path: '/dealers', name: 'Dealers Data', element: DealersData },
   { path: '/model', name: 'Model Data', element: ModelData },
+  { path: '/dealertsewise', name: 'Dealer List TSE', element: DealerTable },
   { path: '/profile', name: 'Profile', element: Profile  },
 
 ]

@@ -1,0 +1,278 @@
+.dealerTSE-table {
+    padding: 20px;
+    width: 100%;
+
+    h2 {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    input {
+        display: block;
+        margin: 0 auto 20px auto;
+        padding: 10px;
+        width: 100%;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+
+        @media (max-width: 768px) {
+            font-size: 12px;
+        }
+    }
+
+    .table-container {
+        height: auto;
+        max-height: 300px;
+        overflow-x: auto;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            text-align: center;
+            background: #ffffff;
+
+            th,
+            td {
+                // padding: 8px 12px;
+                border-bottom: 1px solid #49494954;
+                word-wrap: break-word;
+                vertical-align: middle;
+                /* Ensures content is vertically centered */
+                font-size: 11px;
+                padding: 5px;
+            }
+
+            th {
+                cursor: pointer;
+                background-color: #858585 !important;
+                color: #ffffff;
+                height: 3rem;
+
+                &:hover {
+                    background-color: #e0e0e0;
+                }
+            }
+
+            // tr:nth-child(even) {
+            //     background-color: #d8d8d8;
+            // }
+
+            tr:hover {
+                background-color: #f1f1f1;
+            }
+
+            .table-header {
+                font-weight: bold;
+                background-color: #0d6efd;
+                color: white;
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+
+            tbody {
+                td {
+                    // position: relative;
+                    /* Ensures content inside the cell stays aligned */
+
+                    input {
+                        margin: 0px;
+                        padding: 0px;
+                        width: 4rem;
+                        font-size: small;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    
+                    // .input-dropdown-container {
+                    //     position: relative;
+                    // }
+                    
+                    .dropdown {
+                        // margin-top: 5px;
+                        width: 4rem !important;
+                        padding: 5px;
+                        font-size: 13px;
+                        padding: 0px;
+                        border-radius: 10px;
+                        // position: absolute;
+                        z-index: 1000; /* Ensure it displays above other elements */
+                        background-color: white;
+                        width: 150px; /* Adjust as needed */
+                        max-height: 200px; /* To prevent it from being too large */
+                        overflow-y: auto; /* Enable scrolling for long lists */
+                    }
+                    
+                    
+                    .input-field {
+                        display: flex;
+                        justify-content: center;
+                        width: 100%;
+                        // padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        // font-size: 14px;
+                        background-color: white;
+                        cursor: pointer;
+                    }
+
+
+                    .dropdown option {
+                        padding: 10px;
+                        cursor: pointer;
+                    }
+
+                    .dropdown option:hover {
+                        background-color: #f0f0f0;
+                    }
+
+
+                    &.action-btn {
+                        display: flex;
+                        /* Enables the buttons to sit side by side */
+                        justify-content: center; /* Centers the buttons horizontally */
+                        // align-items: center; /* Centers the buttons vertically */
+                        gap: 8px;
+                        /* Adds spacing between buttons */
+                        padding: 0px;
+                        height: 100%;
+
+                        button {
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            margin: 4px 10px;
+                            font-size: 0.8rem;
+                            transition: background-color 0.3s;
+                            display: flex;
+                            /* Ensures icon/text are properly aligned */
+                            justify-content: center;
+                            align-items: center;
+                            height: 30px;
+                        }
+
+                        .edit-btn {
+                            background-color: #007bff;
+                            color: white;
+
+                            &:hover {
+                                background-color: #0056b3;
+                            }
+                        }
+
+                        .delete-btn {
+                            background-color: #e9574d;
+                            color: white;
+
+                            &:hover {
+                                background-color: #d32f2f;
+                            }
+                        }
+
+                        .dealerTSE-table .table-container .table tbody td.action-btn button {
+                            // padding: 0px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 14px;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: transform 0.2s;
+
+            &:disabled {
+                cursor: not-allowed;
+                background-color: #ccc;
+            }
+
+            &:not(:disabled) {
+                background-color: #a764dd;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+
+                &:hover {
+                    transform: translateY(-2px);
+                }
+            }
+        }
+
+        span {
+            margin: 0 10px;
+            font-size: 14px;
+        }
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .dealerTSE-table {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .table-container {
+                .table {
+                    font-size: 12px;
+
+                    th,
+                    td {
+                        padding: 6px 8px;
+                    }
+                }
+            }
+        }
+
+        .pagination {
+            button {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            span {
+                font-size: 12px;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        h2 {
+            font-size: 1.25rem;
+        }
+
+        .pagination {
+            flex-direction: column;
+
+            button {
+                margin: 5px 0;
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            span {
+                font-size: 12px;
+                margin: 10px 0;
+            }
+        }
+    }
+}

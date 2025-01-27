@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -19,15 +19,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 import { Button } from '@mui/material'; // Added Button component
-import { FaTachometerAlt, FaClipboardList, FaFilter, FaChartBar, FaUsers, FaPencilAlt, FaUserCircle,FaRegHandshake } from 'react-icons/fa';
+import { FaTachometerAlt, FaClipboardList, FaFilter, FaChartBar, FaUsers, FaPencilAlt, FaUserCircle, FaRegHandshake } from 'react-icons/fa';
 import { AiFillProduct } from 'react-icons/ai';
 // import { IoPhonePortrait } from "react-icons/io5";
 import { RiLogoutBoxFill, RiFileUploadFill } from 'react-icons/ri';
 import { IoIosMail } from "react-icons/io";
-import { Dialog, DialogTitle, DialogContent, DialogActions,  TextField } from '@mui/material';
-import { MdOutlineDashboard  ,MdTableView,MdOutlineAnalytics,MdOutlineGroups2, MdUploadFile ,MdLogout} from "react-icons/md";
-import { LuPickaxe,LuTableColumnsSplit } from "react-icons/lu";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
+import { MdOutlineDashboard, MdTableView, MdOutlineAnalytics, MdOutlineGroups2, MdUploadFile, MdLogout } from "react-icons/md";
+import { LuPickaxe, LuTableColumnsSplit } from "react-icons/lu";
 
 const drawerWidth = 240;
 
@@ -123,8 +124,8 @@ const UploadModal = ({ open, onClose, title }) => {
 
 const MiniDrawer = ({ open, setOpen }) => {
   const theme = useTheme();
-  // const [open, setOpen] = React.useState(false);
-  const [openUpload, setOpenUpload] = useState(false); // State for managing the dropdown
+  const [openDealerDash, setOpenDealerDash] = useState(false); // State for Dealer Dash
+  const [openUpload, setOpenUpload] = useState(false); // State for Upload dropdown
   const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
@@ -135,120 +136,79 @@ const MiniDrawer = ({ open, setOpen }) => {
     setOpen(false);
   };
 
-  const handleUploadClick = () => {
-    setOpen(true)
-    setOpenUpload(!openUpload); // Toggle the dropdown
+  const toggleDealerDash = () => {
+    setOpenDealerDash((prev) => !prev); // Toggle Dealer Dash dropdown
   };
 
-  // const navItems = [
-  //   { name: 'Dashboard', to: '/dashboard', icon: <FaTachometerAlt /> },
-  //   { name: 'Orders', to: '/orders', icon: <FaClipboardList /> },
-  //   { name: 'Sales Data', to: '/salesData', icon: <FaChartBar /> },
-  //   { name: 'Dealers', to: '/dealers', icon: <FaPencilAlt /> },
-  //   { name: 'Extraction', to: '/extraction', icon: <FaFilter /> },
-  //   { name: 'Segment', to: '/segment', icon: <AiFillProduct /> },
-  //   { name: 'Users', to: '/users', icon: <FaUsers /> },
-  //   // { name: 'Model', to: '/model', icon: <IoPhonePortrait /> },
-  //   {
-  //     name: 'Upload',
-  //     icon: <RiFileUploadFill />,
-  //     onClick: handleUploadClick, // Add click handler to toggle dropdown
-  //   },
-  //   // { name: 'Profile', to: '/profile', icon: <FaUserCircle /> },
-  //   {
-  //     name: 'Logout',
-  //     icon: <RiLogoutBoxFill />,
-  //     action: () => {
-  //       localStorage.removeItem('isAuthenticated'); 
-  //       navigate('/login'); 
-  //     },
-  //   },
-  // ];
+  const handleUploadClick = () => {
+    setOpen(true);
+    setOpenUpload(!openUpload); // Toggle Upload dropdown
+  };
+
   const navItems = [
-    { name: 'Dashboard', to: '/dashboard', icon: <MdOutlineDashboard  /> },
+    { name: 'Dashboard', to: '/dashboard', icon: <MdOutlineDashboard /> },
     { name: 'Orders', to: '/orders', icon: <MdTableView /> },
     { name: 'Sales Data', to: '/salesData', icon: <MdOutlineAnalytics /> },
-    { name: 'Dealers', to: '/dealers', icon: <FaRegHandshake /> },
-    { name: 'Extraction', to: '/extraction', icon: <LuPickaxe/> },
+    {
+      name: 'Dealer Dash',
+      icon: <MdOutlineAnalytics />,
+      onClick: toggleDealerDash, // Add toggle handler
+      children: [
+        { name: 'Dealers', to: '/dealers', icon: <FaRegHandshake /> },
+        { name: 'OBM', to: '/dealertsewise', icon: <Diversity3Icon /> },
+        { name: 'Credit Limit', to: '/dealertsewise', icon: <Diversity3Icon /> },
+      ],
+      // dropdownIcon: < /> 
+    },
+    { name: 'Extraction', to: '/extraction', icon: <LuPickaxe /> },
     { name: 'Segment', to: '/segment', icon: <LuTableColumnsSplit /> },
     { name: 'Users', to: '/users', icon: <MdOutlineGroups2 /> },
-    // { name: 'Model', to: '/model', icon: <IoPhonePortrait /> },
     {
       name: 'Upload',
-      icon: < MdUploadFile />,
-      onClick: handleUploadClick, // Add click handler to toggle dropdown
+      icon: <MdUploadFile />,
+      onClick: handleUploadClick, // Add click handler for Upload
     },
-    // { name: 'Profile', to: '/profile', icon: <FaUserCircle /> },
     {
       name: 'Logout',
       icon: <MdLogout />,
       action: () => {
-        localStorage.removeItem('isAuthenticated'); 
-        navigate('/login'); 
+        localStorage.removeItem('isAuthenticated');
+        navigate('/login');
       },
     },
   ];
 
-  // upload and extract
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-  const [openExtractModal, setOpenExtractModal] = useState(false);
-
-  // Handlers for Open/Close Modals
-  const handleUploadOpen = () => setOpenUploadModal(true);
-  const handleUploadClose = () => setOpenUploadModal(false);
-
-  const handleExtractOpen = () => setOpenExtractModal(true);
-  const handleExtractClose = () => setOpenExtractModal(false);
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}
-      sx={{
-        backgroundColor: '#ffffff', // Set background to white
-        color: '#000000', // Set text color to black
-        boxShadow: 'none', // Optional: remove shadow for a flat appearance
-        borderBottom: '1px solid #e0e0e0', // Optional: subtle border for separation
-      }}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: '#ffffff', color: '#000000', boxShadow: 'none', borderBottom: '1px solid #e0e0e0' }}>
         <Toolbar>
-        <div style={{fontSize:"25px",
-          ...(open && { display: 'none' }),
-          marginLeft:"-10px"
-        }}>SA</div>
+          <div style={{ fontSize: '25px', ...(open && { display: 'none' }), marginLeft: '-10px' }}>SA</div>
           <IconButton
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginLeft:1,
-              // marginRight: 5,
+              marginLeft: 1,
               ...(open && { display: 'none' }),
             }}
           >
             <MenuIcon />
-            </IconButton>          
-          {/* This Box ensures the spacing */}
+          </IconButton>
           <Box sx={{ flexGrow: 1 }} />
-          <Typography variant="h6" noWrap component="div" sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px', // Adds spacing between the icons
-            color: 'gray', // Sets the color to gray
-          }}>
-          <Link to="/messages" style={{ color: 'inherit', textDecoration: 'none' }}>
-            <IoIosMail style={{ fontSize: '24px' }} />
-          </Link>
-        
-          {/* User Profile Icon with Link */}
-          <Link to="/profile" style={{ color: 'inherit', textDecoration: 'none' }}>
-            <FaUserCircle style={{ fontSize: '24px' }} />
-          </Link>
+          <Typography variant="h6" noWrap component="div" sx={{ display: 'flex', alignItems: 'center', gap: '16px', color: 'gray' }}>
+            <Link to="/messages" style={{ color: 'inherit', textDecoration: 'none' }}>
+              <IoIosMail style={{ fontSize: '24px' }} />
+            </Link>
+            <Link to="/profile" style={{ color: 'inherit', textDecoration: 'none' }}>
+              <FaUserCircle style={{ fontSize: '24px' }} />
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-        <div style={{fontSize:"25px"}}>Siddha Admin</div>
+          <div style={{ fontSize: '25px' }}>Siddha Admin</div>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -256,78 +216,51 @@ const MiniDrawer = ({ open, setOpen }) => {
         <Divider />
         <List>
           {navItems.map((item, index) => (
-            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-              <Tooltip title={item.name} arrow placement="right">
-                <ListItemButton
-                  component={item.action ? undefined : Link} // Only add Link for navigation
-                  to={item.to} // Use 'to' only if navigation is present
-                  onClick={item.onClick || item.action} // Use onClick for dropdown toggle or logout action
-                  sx={{
-                    fontSize:21,
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
+            <React.Fragment key={index}>
+              <ListItem disablePadding sx={{ display: 'block' }}>
+                <Tooltip title={item.name} arrow placement="right">
+                  <ListItemButton
+                    component={item.action || item.children ? undefined : Link}
+                    to={item.to}
+                    onClick={item.onClick || item.action}
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
+                      fontSize: 21,
+                      minHeight: 48,
+                      justifyContent: open ? 'initial' : 'center',
+                      px: 2.5,
                     }}
                   >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.name}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Tooltip>
-              {/* Show dropdown for Upload */}
-              {item.name === 'Upload' && (
-                <Collapse in={openUpload} timeout="auto" unmountOnExit >
-                  <List component="div" disablePadding sx={{...(!open && { display: 'none' })}}>
-                  <ListItemButton component="div" sx={{ px: 2.5 }}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    onClick={handleUploadOpen} // Open upload modal
-                  >
-                    Tally Transaction
-                  </Button>
-                </ListItemButton>
-                <ListItemButton component="div" sx={{ px: 2.5 }}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    onClick={handleExtractOpen} // Open extraction modal
-                  >
-                    Extraction Data
-                  </Button>
-                </ListItemButton>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : 'auto',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </Tooltip>
+              </ListItem>
+              {item.children && (
+                <Collapse in={openDealerDash} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {item.children.map((child, childIndex) => (
+                      <ListItemButton key={childIndex} component={Link} to={child.to} sx={{ pl: 4 }}>
+                        <ListItemIcon>{child.icon}</ListItemIcon>
+                        <ListItemText primary={child.name} />
+                      </ListItemButton>
+                    ))}
                   </List>
-                  <UploadModal
-                      open={openUploadModal}
-                      onClose={handleUploadClose}
-                      title="Upload Tally Transaction"
-                      
-                    />
-                    <UploadModal
-                      open={openExtractModal}
-                      onClose={handleExtractClose}
-                      title="Upload Extraction Data"
-                    />
                 </Collapse>
-                
               )}
-            </ListItem>
+            </React.Fragment>
           ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {/* Main content goes here */}
       </Box>
     </Box>
   );

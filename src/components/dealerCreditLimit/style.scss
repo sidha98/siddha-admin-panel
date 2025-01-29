@@ -1,23 +1,32 @@
-.edit-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    margin: 5px;
-    border-radius: 5px;
-
-    &:hover {
-        background-color: #0056b3;
+.dealerTSE-table{
+    .table-container{
+        table{
+            tbody{
+                tr{
+                    td{
+                        padding: 0px !important;
+                    }
+                }
+            }
+        }
+        td {
+            padding: 0px;
+        }
+    } 
+    .edit-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        margin: 5px;
+        border-radius: 5px;
+        
+        &:hover {
+            background-color: #0056b3;
+        }
     }
-}
-
-.delete-btn {
-    background-color: #e9574d;
-    color: white;
-    border: none;
-    margin: 5px;
-    border-radius: 5px;
-
-    &:hover {
-        background-color: #d32f2f;
+    .pagination{
+        button{
+            padding: 0px;
+        }
     }
 }

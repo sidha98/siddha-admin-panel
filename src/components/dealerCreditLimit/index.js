@@ -3,6 +3,7 @@ import axios from "axios";
 import config from "../../config";
 import { MdDelete, MdOutlineFileDownload } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
+import { GrNext, GrPrevious } from "react-icons/gr";
 import "./style.scss";
 
 const DealerCreditLimit = () => {
@@ -15,7 +16,7 @@ const DealerCreditLimit = () => {
     const [file, setFile] = useState(null);
     const [editItemIndex, setEditItemIndex] = useState(null); // Track item index for editing
     const [editCreditLimit, setEditCreditLimit] = useState(""); // Track edited credit limit value
-
+    const [selectedOption, setSelectedOption] = useState("MDD"); // Default to 'MDD'
     // Backend API endpoint
     const backend_url = config.backend_url;
 
@@ -24,13 +25,11 @@ const DealerCreditLimit = () => {
         try {
             setLoading(true); // Set loading to true before fetching
             const response = await axios.get(
-                `${backend_url}/credit-limit/get-credit-limits?page=${page}&limit=${limit}`
+                `${backend_url}/credit-limit/get-credit-limits?page=${page}&limit=${limit}&dealerCategory=${selectedOption}`
             );
             const { data: dealerData, pagination } = response.data;
             if (response.data.success) {
-                const { data, pagination } = response.data;
-
-                setData(data); // Set the fetched data
+                setData(dealerData); // Set the fetched data
                 setTotalPages(pagination.totalPages); // Set total pages
                 setLimit(pagination.limit); // Dynamically update the limit
             } else {
@@ -43,14 +42,14 @@ const DealerCreditLimit = () => {
         }
     };
 
-    // Fetch data when the component mounts or the current page changes
+    // Fetch data when the component mounts or the current page or dealerCategory changes
     useEffect(() => {
         fetchData(currentPage);
-    }, [currentPage]);
+    }, [currentPage, selectedOption]); // Trigger fetch on page change or category selection
 
     // Filter data based on search input
     const filteredData = data.filter((item) =>
-        ["dealerCode", "shopName", "credit_limit","_id"].some((key) =>
+        ["dealerCode", "shopName", "credit_limit", "_id"].some((key) =>
             item[key]?.toString().toLowerCase().includes(search.toLowerCase())
         )
     );
@@ -87,8 +86,6 @@ const DealerCreditLimit = () => {
                 payload
             );
 
-
-
             if (response.status === 200) {
                 console.log("Data updated successfully:", response.data);
                 fetchData(currentPage); // Refresh data after saving
@@ -111,23 +108,11 @@ const DealerCreditLimit = () => {
         }
     };
 
-
-    const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this item?")) {
-            try {
-                // Implement delete logic here
-                console.log(`Delete button clicked for ID: ${id}`);
-            } catch (error) {
-                console.error("Error deleting data:", error.message);
-            }
-        }
-    };
-
     const handleFileChange = (e) => {
         const uploadedFile = e.target.files[0];
         if (uploadedFile) {
             setFile(uploadedFile);
-        }else {
+        } else {
             setFile(null); // Clear the state if no file is selected
         }
     };
@@ -172,68 +157,83 @@ const DealerCreditLimit = () => {
         }
     };
 
+    const handleSelectChange = (e) => {
+        setSelectedOption(e.target.value); // Update the selected dealer category
+    };
+
     return (
         <div className="dealerTSE-table" style={{ padding: "20px" }}>
-            <h2 style={{ marginBottom: "20px" }}>Credit Limit of Dealers</h2>
-            <div style={{ display: "flex" }}>
+            <h2 style={{ marginBottom: "20px", display: 'flex', justifyContent: 'start' }}>Credit Limit of Dealers</h2>
+            <div style={{ display: "flex", justifyContent: 'space-between' }}>
                 <input
                     type="text"
                     placeholder="Search by Dealer Code, Dealer Name..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     style={{
+                        margin: '0px',
                         marginBottom: "20px",
                         padding: "10px",
                         width: "50%",
                         fontSize: "14px",
+                        display: 'flex',
+                        justifyContent: 'start'
                     }}
                 />
-                <button
-                    onClick={() => document.getElementById("file-input").click()}
-                    style={{
-                        marginBottom: "20px",
-                        padding: "10px",
-                        fontSize: "12px",
-                        marginLeft: "20px",
-                        backgroundColor: "green",
-                        color: "white",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "5px",
-                    }}
-                >
-                    {file ? file.name : "Choose CSV File"}
-                </button>
-                <input
-                    id="file-input"
-                    type="file"
-                    accept=".csv"
-                    onChange={handleFileChange}
-                    style={{ display: "none" }}
-                />
-                <button
-                    onClick={handleUploadFile}
-                    style={{
-                        marginBottom: "20px",
-                        padding: "10px",
-                        fontSize: "12px",
-                        marginLeft: "10px",
-                        backgroundColor: "blue",
-                        color: "white",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "5px",
-                    }}
-                >
-                    Upload CSV
-                </button>
+                <div>
+                    <select value={selectedOption} onChange={handleSelectChange} style={{ padding: "10px", fontSize: "14px" }}>
+                        <option>MDD</option>
+                        <option>All</option>
+                    </select>
+                </div>
+                <div>
+                    <button
+                        onClick={() => document.getElementById("file-input").click()}
+                        style={{
+                            marginBottom: "20px",
+                            padding: "10px",
+                            fontSize: "12px",
+                            marginLeft: "20px",
+                            backgroundColor: "green",
+                            color: "white",
+                            border: "none",
+                            cursor: "pointer",
+                            borderRadius: "5px",
+                        }}
+                    >
+                        {file ? file.name : "Choose CSV File"}
+                    </button>
+                    <input
+                        id="file-input"
+                        type="file"
+                        accept=".csv"
+                        onChange={handleFileChange}
+                        style={{ display: "none" }}
+                    />
+                    <button
+                        onClick={handleUploadFile}
+                        style={{
+                            marginBottom: "20px",
+                            padding: "10px",
+                            fontSize: "12px",
+                            marginLeft: "10px",
+                            backgroundColor: "blue",
+                            color: "white",
+                            border: "none",
+                            cursor: "pointer",
+                            borderRadius: "5px",
+                        }}
+                    >
+                        Upload CSV
+                    </button>
+                </div>
             </div>
 
             {/* Table */}
             {loading ? (
                 <p>Loading data...</p>
             ) : filteredData.length > 0 ? (
-                <div className="table-container" style={{ overflowX: "auto" }}>
+                <div className="table-container" style={{ overflowX: "auto", maxHeight: "450px", overflowY: "auto" }}>
                     <table
                         className="table"
                         style={{
@@ -244,48 +244,36 @@ const DealerCreditLimit = () => {
                     >
                         <thead>
                             <tr>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>
-                                    S. No.
-                                </th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>
-                                    Dealer Code
-                                </th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>
-                                    Dealer Name
-                                </th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>
-                                    Credit Limit
-                                </th>
-                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>
-                                    Action
-                                </th>
+                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>S. No.</th>
+                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Dealer Code</th>
+                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Shop Name</th>
+                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Dealer Category</th>
+                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Credit Limit</th>
+                                <th style={{ border: "1px solid #ccc", padding: "10px" }}>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredData.map((item, index) => (
                                 <tr key={index}>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>
+                                    <td style={{ border: "1px solid #ccc" }}>
                                         {(currentPage - 1) * limit + index + 1}
                                     </td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>
-                                        {item.dealerCode || "N/A"}
-                                    </td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>
-                                        {item.shopName || "N/A"}
-                                    </td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>
+                                    <td style={{ border: "1px solid #ccc" }}>{item.dealerCode || "N/A"}</td>
+                                    <td style={{ border: "1px solid #ccc" }}>{item.shopName || "N/A"}</td>
+                                    <td style={{ border: "1px solid #ccc" }}>{item.dealerCategory || "N/A"}</td>
+                                    <td style={{ border: "1px solid #ccc" }}>
                                         {editItemIndex === index ? (
                                             <input
                                                 type="number"
                                                 value={editCreditLimit}
                                                 onChange={(e) => setEditCreditLimit(e.target.value)}
-                                                style={{ width: "100%", padding: "5px" }}
+                                                style={{ width: "100%" }}
                                             />
                                         ) : (
                                             item.credit_limit || "N/A"
                                         )}
                                     </td>
-                                    <td style={{ border: "1px solid #ccc", padding: "10px" }}>
+                                    <td style={{ border: "1px solid #ccc" }}>
                                         {editItemIndex === index ? (
                                             <button
                                                 className="edit-btn"
@@ -306,12 +294,6 @@ const DealerCreditLimit = () => {
                                                 <FaEdit />
                                             </button>
                                         )}
-                                        <button
-                                            className="delete-btn"
-                                            onClick={() => handleDelete(item.id)}
-                                        >
-                                            <MdDelete />
-                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -327,7 +309,7 @@ const DealerCreditLimit = () => {
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage(currentPage - 1)}
                 >
-                    Previous
+                    <GrPrevious />
                 </button>
                 <span>
                     Page {currentPage} of {totalPages}
@@ -336,7 +318,7 @@ const DealerCreditLimit = () => {
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage(currentPage + 1)}
                 >
-                    Next
+                    <GrNext />
                 </button>
             </div>
         </div>

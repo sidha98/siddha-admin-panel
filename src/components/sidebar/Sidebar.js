@@ -156,7 +156,7 @@ const MiniDrawer = ({ open, setOpen }) => {
       children: [
         { name: 'Dealers', to: '/dealers', icon: <FaRegHandshake /> },
         { name: 'OBM', to: '/dealertsewise', icon: <Diversity3Icon /> },
-        { name: 'Credit Limit', to: '/dealertsewise', icon: <Diversity3Icon /> },
+        { name: 'Credit Limit', to: '/dealer-credit-limit', icon: <Diversity3Icon /> },
       ],
       // dropdownIcon: < /> 
     },

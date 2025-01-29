@@ -10,6 +10,7 @@ import SegmentData from './components/segmentTarget'
 import Users from './components/users'
 import { element } from 'prop-types'
 import DealerTable from './components/dealerTseWise'
+import DealerCreditLimit from './components/dealerCreditLimit'
 
 
 const routes = [
@@ -23,6 +24,7 @@ const routes = [
   { path: '/dealers', name: 'Dealers Data', element: DealersData },
   { path: '/model', name: 'Model Data', element: ModelData },
   { path: '/dealertsewise', name: 'Dealer List TSE', element: DealerTable },
+  { path: '/dealer-credit-limit', name: 'Dealer List TSE', element: DealerCreditLimit },
   { path: '/profile', name: 'Profile', element: Profile  },
 
 ]

@@ -210,7 +210,19 @@ const DealerTable = () => {
             console.log(`Delete button clicked for ID: ${id}`);
             // Implement your delete logic here
         }
-    };
+    };//===============oooorrrrrrrrr==================
+    // const handleDelete = (id) => {
+    //     const isConfirmed = window.confirm("Are you sure you want to delete this item?");
+        
+    //     if (isConfirmed) {
+    //         console.log(`Item with ID: ${id} will be deleted.`);
+    //         // Perform the actual delete logic here (e.g., making a request to the backend)
+    //         // You can make an API call to delete the item from the backend if needed.
+    //     } else {
+    //         console.log("Deletion canceled.");
+    //     }
+    // };
+    // ===============================================
 
     return (
         <div className="dealerTSE-table">

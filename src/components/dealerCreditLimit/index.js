@@ -3,8 +3,9 @@ import axios from "axios";
 import config from "../../config";
 import { MdDelete, MdOutlineFileDownload } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { GrNext, GrPrevious } from "react-icons/gr";
 import "./style.scss";
+import { cilArrowCircleLeft, cilArrowCircleRight } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 
 const DealerCreditLimit = () => {
     const [data, setData] = useState([]); // State to store the fetched data
@@ -309,7 +310,7 @@ const DealerCreditLimit = () => {
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage(currentPage - 1)}
                 >
-                    <GrPrevious />
+                    <CIcon icon={cilArrowCircleLeft} />
                 </button>
                 <span>
                     Page {currentPage} of {totalPages}
@@ -318,7 +319,7 @@ const DealerCreditLimit = () => {
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage(currentPage + 1)}
                 >
-                    <GrNext />
+                   <CIcon icon={cilArrowCircleRight} />
                 </button>
             </div>
         </div>

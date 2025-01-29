@@ -213,7 +213,7 @@ const DealerTable = () => {
     };//===============oooorrrrrrrrr==================
     // const handleDelete = (id) => {
     //     const isConfirmed = window.confirm("Are you sure you want to delete this item?");
-        
+
     //     if (isConfirmed) {
     //         console.log(`Item with ID: ${id} will be deleted.`);
     //         // Perform the actual delete logic here (e.g., making a request to the backend)
@@ -226,7 +226,9 @@ const DealerTable = () => {
 
     return (
         <div className="dealerTSE-table">
+
             <h2>Dealer List</h2>
+
             <input
                 type="text"
                 placeholder="Search by id, tse, dealer code, dealer name, area..."
@@ -234,6 +236,7 @@ const DealerTable = () => {
                 onChange={handleSearchChange}
                 style={{ marginBottom: "20px", padding: "10px", width: "30%", fontSize: "12px" }}
             />
+
             <div className="table-container">
                 <table className="table">
                     <thead>
@@ -304,7 +307,7 @@ const DealerTable = () => {
                     <CIcon icon={cilArrowCircleLeft} />
                 </button>
                 <span>
-                    Page {currentPage} of {totalPages}
+                    {currentPage} of {totalPages}
                 </span>
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}

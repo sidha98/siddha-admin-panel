@@ -11,7 +11,8 @@ import Users from './components/users'
 import { element } from 'prop-types'
 import DealerTable from './components/dealerTseWise'
 import DealerCreditLimit from './components/dealerCreditLimit'
-
+import Employee from './components/employee'
+import TallyTable from './components/tallyTranscation'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -26,7 +27,8 @@ const routes = [
   { path: '/dealertsewise', name: 'Dealer List TSE', element: DealerTable },
   { path: '/dealer-credit-limit', name: 'Dealer List TSE', element: DealerCreditLimit },
   { path: '/profile', name: 'Profile', element: Profile  },
-
+  { path: '/employees', name: 'Employees', element: Employee  },
+  { path: '/tally-transaction', name: 'Tally Transaction', element: TallyTable  },
 ]
 
 export default routes

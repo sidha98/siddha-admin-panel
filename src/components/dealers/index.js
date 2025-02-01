@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import config from '../../config';
+import config from '../../config.dev.json'
 import "./style.scss";
 import { CTable } from "@coreui/react";
+import { FaEdit  } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const backend_url = config.backend_url
 
@@ -17,13 +19,13 @@ const Dealers = () => {
   const [totalCount, setTotalCount] = useState(0);
   const rowsPerPage = 50;
 
-  const fetchSalesData = async (page) => {
+  const fetchDealerData = async (page) => {
     try {
       const response = await axios.get(
-        `${backend_url}/dealer/getDealer?page=${page}&limit=${rowsPerPage}`
+        `${backend_url}/dealer/getDealer?page=${page}&limit=${rowsPerPage}&query=${searchTerm}`
       );
       setDealerData(response.data.data);
-      setTotalCount(response.data.totalCount);
+      setTotalCount(response.data.totalRecords);
       setLoading(false);
     } catch (err) {
       setError("Error fetching data");
@@ -33,27 +35,29 @@ const Dealers = () => {
   };
 
   useEffect(() => {
-    fetchSalesData(currentPage);
+    fetchDealerData(currentPage);
   }, [currentPage]);
+  useEffect(()=>{
+    fetchDealerData(currentPage)
+  },[searchTerm])
 
   const applyFilters = () => {
-    const filteredData = fetchSalesData.filter((item) => {
-      const matchesSearchTerm = item.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+    const filteredData = fetchDealerData.filter((item) => {
+      // const matchesSearchTerm = item.name
+      //   .toLowerCase()
+      //   .includes(searchTerm.toLowerCase());
       const matchesDateRange =
         (!startDate || new Date(item.date) >= new Date(startDate)) &&
         (!endDate || new Date(item.date) <= new Date(endDate));
-      return matchesSearchTerm && matchesDateRange;
+      return matchesDateRange;
     });
     setDealerData(filteredData);
   };
 
   const resetFilters = () => {
-    setSearchTerm("");
     setStartDate("");
     setEndDate("");
-    fetchSalesData(currentPage);
+    fetchDealerData(currentPage);
   };
 
   // Pagination Logic
@@ -78,6 +82,7 @@ const Dealers = () => {
       <h2 className="table-title">Dealers</h2>
       {/* Filters */}
       <div className="filter-container">
+      
         <input
           type="text"
           placeholder="Search..."
@@ -113,23 +118,32 @@ const Dealers = () => {
           <CTable striped className="dealer-table">
             <thead>
               <tr>
+                <th>SNo.</th>
                 <th>NAME</th>
                 <th>POSITION</th>
                 <th>CONTACT NUMBER</th>
                 <th>EMAIL</th>
                 <th>ADDRESS</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {dealerData.length > 0 ? (
                 dealerData.map((item, index) => (
-                  <tr key={item.id || index}>
-                    <td>{item.name}</td>
+                  <tr key={item._id || index}>
+                    <td>{(currentPage-1)*rowsPerPage+index+1}</td>
+                    <td>{item.owner.name}</td>
                     {/* <td>{item.position}</td> */}
-                    <td>{item.contactNumber}</td>
-                    <td>{item.email}</td>
-                    <td>{item.birthday}</td>
-                    <td>{item.homeAddress}</td>
+                    <td>{item.owner.position}</td>
+                    <td>{item.owner.contactNumber}</td>
+                    <td>{item.owner.email}</td>
+                    <td>{item.owner.homeAddress}</td>
+                    <td>
+                      <div className="action-btn">
+                        <button className="edit-btn"><FaEdit /></button>
+                        <button className="delete-btn"><MdDelete /></button>
+                      </div>
+                    </td>
                   </tr>
                 ))
               ) : (

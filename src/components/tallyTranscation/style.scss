@@ -1,5 +1,5 @@
 
-.user-container {
+.Tally-container {
   // padding: 30px;
   // background-color: #f9f9f9;
   // border-radius: 8px;
@@ -8,43 +8,96 @@
 
   .filter-section {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     margin-bottom: 20px;
 
     .search-input {
-      width: 30%;
       // padding: 8px 12px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
       margin-right: 10px;
     }
-    .add-btn{
+    .filter-input {
+      height: 1.5rem;
+      padding: 0 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .filter-buttons {
+      height: 1.5rem;
       display: flex;
+      gap: 10px;
+  
+      .apply-btn,
+      .reset-btn {
+        padding: 0 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+  
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+  
+      .apply-btn {
+        background-color: grey;
+        color: white;
+      }
+  
+      .reset-btn {
+        background-color: #e9574d;
+        color: white;
+      }
+    }
+    .error-message{
+      color: red;
+    }
+  }
+  .upload{
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    .upload-btn{
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      background-color: #28a745;
+      transition: background-color 0.3s;
+      &:hover{
+        opacity: 0.9;
+      }
+    }
+    .tally-delete-btn{
+      padding: 8px 12px;
+      background-color: #e9574d;
       color: white;
       border: none;
+      font-size: 16px;
+      // width: 1rem;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 0.7rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       transition: background-color 0.3s;
 
       &:hover {
         opacity: 0.9;
-      }
-    }
-
-    // .position-dropdown {
-    //   // padding: 8px 12px;
-    //   font-size: 16px;
-    //   border: 1px solid #ccc;
-    //   border-radius: 4px;
-    //   width: 30%;
-    // }
+      }      
+    } 
   }
 
-  .user-title {
+  .Tally-title {
     // text-align: center;
     color: #222;
     font-size: 20px;
@@ -84,7 +137,7 @@
         overflow-y: auto;
         overflow-x: hidden;
 
-      .user-table {
+      .Tally-table {
         width: 100%;
         border-collapse: collapse;
         text-align: left;
@@ -126,8 +179,8 @@
                   background-color: #007bff;
                   color: white;
                   border: none;
-                  border-radius: 5px;
                   width: 1rem;
+                  border-radius: 5px;
                   cursor: pointer;
                   font-size: 0.7rem;
                   transition: background-color 0.3s;
@@ -136,22 +189,7 @@
                     opacity: 0.9;
                   }
                 }
-                .delete-btn{
-                  background-color: #e9574d;
-                  color: white;
-                  width: 1rem;
-                  border: none;
-                  border-radius: 5px;
-                  cursor: pointer;
-                  font-size: 0.7rem;
-                  transition: background-color 0.3s;
-        
-                  &:hover {
-                    opacity: 0.9;
-                  }
-                  
-                  
-                }  
+                 
                 .save-btn{
                   background-color: #007bff;
                   color: white;
@@ -223,7 +261,7 @@
     }
   }
 }
-.add-user-box {
+.add-Tally-box {
   position: fixed;
   top: 0;
   left: 0;
@@ -235,7 +273,7 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
 
-  .add-user-content {
+  .add-Tally-content {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
@@ -300,6 +338,92 @@
 
         &:hover {
           background-color: #e53935;
+        }
+      }
+    }
+  }
+}
+.delete-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .dialog-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .dialog-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+
+      .cancel-btn,
+      .delete-btn {
+        flex: 1;
+        padding: 10px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .cancel-btn {
+        background: #ccc;
+        color: #333;
+        margin-right: 10px;
+
+        &:hover {
+          background: darken(#ccc, 10%);
+        }
+      }
+
+      .delete-btn {
+        background: #d9534f;
+        color: white;
+
+        &:hover {
+          background: darken(#d9534f, 10%);
         }
       }
     }

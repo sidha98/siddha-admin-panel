@@ -1,6 +1,6 @@
 import React, { Children, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -21,14 +21,19 @@ import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import { Button } from '@mui/material'; // Added Button component
-import { FaTachometerAlt, FaClipboardList, FaFilter, FaChartBar, FaUsers, FaPencilAlt, FaUserCircle, FaRegHandshake } from 'react-icons/fa';
+import { FaTachometerAlt, FaClipboardList, FaFilter, FaChartBar, FaUsers, FaPencilAlt,FaUserTie, FaUserCircle,FaRegHandshake ,FaChevronDown} from 'react-icons/fa';
 import { AiFillProduct } from 'react-icons/ai';
 // import { IoPhonePortrait } from "react-icons/io5";
 import { RiLogoutBoxFill, RiFileUploadFill } from 'react-icons/ri';
 import { IoIosMail } from "react-icons/io";
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
-import { MdOutlineDashboard, MdTableView, MdOutlineAnalytics, MdOutlineGroups2, MdUploadFile, MdLogout } from "react-icons/md";
+import { Dialog, DialogTitle, DialogContent, DialogActions,  TextField,Alert } from '@mui/material';
+import { MdOutlineDashboard  ,MdTableView,MdOutlineAnalytics,MdOutlineGroups2, MdUploadFile ,MdLogout,MdOutlineBusinessCenter } from "react-icons/md";
 import { LuPickaxe, LuTableColumnsSplit } from "react-icons/lu";
+import { TbTransactionRupee } from "react-icons/tb";
+import config from "../../config.dev.json";
+import axios from 'axios';
+
+const backend_url = config.backend_url; 
 
 const drawerWidth = 240;
 
@@ -95,32 +100,65 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   })
 );
-const UploadModal = ({ open, onClose, title }) => {
-  return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        <TextField
-          fullWidth
-          type="file"
-          // inputProps={{ accept: '.csv, .xlsx, .xls' }}
-          sx={{ my: 2 }}
-        />
-        <TextField
-          fullWidth
-          label="Description"
-          multiline
-          rows={3}
-          sx={{ my: 2 }}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button variant="contained">Upload</Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
+// const UploadModal = ({ open, onClose, title }) => {
+//   const [file, setFile] = useState(null);
+//   const [message, setmessage] = useState('');
+
+//   const handleUpload = async () => {
+//     if (!file) {
+//       setmessage("Please select a file.");
+//       return;
+//     }
+//     let url = "";
+//     try {
+//       if (title === "Tally Transaction") {
+//         url = `${backend_url}/tally-transaction/add-tally-transaction`;
+//       } else if (title === "Extraction Data") {
+//         url = `${backend_url}/extractionData/addExtraction`;
+//       } else {
+//         setmessage("Incorrect file type");
+//         return;
+//       }
+
+//       const formData = new FormData();
+//       formData.append("file", file);
+
+//       await axios.post(url, formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
+//       setmessage("File uploaded successfully!");
+//     } catch (err) {
+//       console.log(err);
+//       setmessage("An error occurred while uploading.");
+//     }
+//   };
+
+//   return (
+//     <Dialog open={open} onClose={onClose}>
+//       <DialogTitle>Upload {title}</DialogTitle>
+//       <DialogContent>
+//         <TextField
+//           fullWidth
+//           type="file"
+//           onChange={(e) => setFile(e.target.files[0])} // Correct file selection
+//           inputProps={{ accept: '.csv, .xml' }}
+//           sx={{ my: 2 }}
+//         />
+//       </DialogContent>
+//       <DialogActions>
+//         <Button onClick={onClose}>Cancel</Button>
+//         <Button variant="contained" onClick={handleUpload}>Upload</Button>
+//       </DialogActions>
+//       {message && (
+//         <Alert severity={message === "File uploaded successfully!" ? "success" : "error"} onClose={() => setmessage('')}>
+//           {message}
+//         </Alert>
+//       )}
+//     </Dialog>
+//   );
+// };
 
 const MiniDrawer = ({ open, setOpen }) => {
   const theme = useTheme();
@@ -140,10 +178,25 @@ const MiniDrawer = ({ open, setOpen }) => {
     setOpenDealerDash((prev) => !prev); // Toggle Dealer Dash dropdown
   };
 
+  const location = useLocation()
   const handleUploadClick = () => {
-    setOpen(true);
-    setOpenUpload(!openUpload); // Toggle Upload dropdown
+    console.log(location)
+    if (location.pathname === "/tally-transaction") { 
+      setOpen(true); 
+    }
+    if(setOpen){
+      setOpenUpload(!openUpload); // Toggle the dropdown
+    }
+    if(!setOpen){
+      setOpenUpload(false); // Close the dropdown
+    }
   };
+  // // upload and extract
+  // const [openUploadModal, setOpenUploadModal] = useState(false);
+
+  // // Handlers for Open/Close Modals
+  // const handleUploadOpen = () => setOpenUploadModal(true);
+  // const handleUploadClose = () => setOpenUploadModal(false);
 
   const navItems = [
     { name: 'Dashboard', to: '/dashboard', icon: <MdOutlineDashboard /> },
@@ -161,13 +214,17 @@ const MiniDrawer = ({ open, setOpen }) => {
       // dropdownIcon: < /> 
     },
     { name: 'Extraction', to: '/extraction', icon: <LuPickaxe /> },
+    { name: 'Tally Transaction', to:'/tally-transaction', icon:<TbTransactionRupee/> ,onClick:handleUploadClick},
     { name: 'Segment', to: '/segment', icon: <LuTableColumnsSplit /> },
     { name: 'Users', to: '/users', icon: <MdOutlineGroups2 /> },
-    {
-      name: 'Upload',
-      icon: <MdUploadFile />,
-      onClick: handleUploadClick, // Add click handler for Upload
-    },
+    { name: 'Employees', to: '/employees', icon: <MdOutlineBusinessCenter />  },
+    // { name: 'Employees', to: '/employees', icon: <FaUserTie /> },
+    // { name: 'Model', to: '/model', icon: <IoPhonePortrait /> },
+    // {
+    //   name: 'Upload',
+    //   icon: < MdUploadFile />,
+    //   onClick: handleUploadClick, // Add click handler to toggle dropdown
+    // },
     {
       name: 'Logout',
       icon: <MdLogout />,

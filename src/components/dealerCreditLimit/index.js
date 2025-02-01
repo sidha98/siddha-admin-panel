@@ -316,8 +316,8 @@ const DealerCreditLimit = () => {
                     Page {currentPage} of {totalPages}
                 </span>
                 <button
-                    disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
                 >
                    <CIcon icon={cilArrowCircleRight} />
                 </button>

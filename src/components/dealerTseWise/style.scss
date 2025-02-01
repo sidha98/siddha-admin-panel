@@ -26,7 +26,7 @@
 
     .table-container {
         height: auto;
-        max-height: 300px;
+        max-height: 420px;
         overflow-x: auto;
         overflow-y: auto;
         border: 1px solid #ccc;
@@ -47,7 +47,7 @@
                 vertical-align: middle;
                 /* Ensures content is vertically centered */
                 font-size: 11px;
-                padding: 5px;
+                // padding: 5px;
             }
 
             th {
@@ -101,7 +101,7 @@
                         width: 4rem !important;
                         padding: 5px;
                         font-size: 13px;
-                        padding: 0px;
+                        padding: 0px !important;
                         border-radius: 10px;
                         // position: absolute;
                         z-index: 1000;
@@ -109,7 +109,7 @@
                         background-color: white;
                         width: 150px;
                         /* Adjust as needed */
-                        max-height: 200px;
+                        max-height: 30px;
                         /* To prevent it from being too large */
                         overflow-y: auto;
                         /* Enable scrolling for long lists */
@@ -130,7 +130,7 @@
 
 
                     .dropdown option {
-                        padding: 10px;
+                        padding: 0px;
                         cursor: pointer;
                     }
 
@@ -139,58 +139,61 @@
                     }
 
 
-                    &.action-btn {
-                        display: flex;
-                        /* Enables the buttons to sit side by side */
-                        justify-content: center;
-                        /* Centers the buttons horizontally */
-                        // align-items: center; /* Centers the buttons vertically */
-                        gap: 8px;
-                        /* Adds spacing between buttons */
-                        padding: 0px;
-                        height: 100%;
+                    // &.action-btn {
+                    //     display: flex;
+                    //     /* Enables the buttons to sit side by side */
+                    //     justify-content: center;
+                    //     /* Centers the buttons horizontally */
+                    //     // align-items: center; /* Centers the buttons vertically */
+                    //     gap: 8px;
+                    //     /* Adds spacing between buttons */
+                    //     padding: 0px;
+                    //     height: 100%;
 
-                        button {
-                            border: none;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            margin: 4px 10px;
-                            font-size: 0.8rem;
-                            transition: background-color 0.3s;
-                            display: flex;
-                            /* Ensures icon/text are properly aligned */
-                            justify-content: center;
-                            align-items: center;
-                            height: 30px;
-                        }
+                    //     button {
+                    //         border: none;
+                    //         border-radius: 5px;
+                    //         cursor: pointer;
+                    //         margin: 4px 10px;
+                    //         font-size: 0.8rem;
+                    //         transition: background-color 0.3s;
+                    //         display: flex;
+                    //         /* Ensures icon/text are properly aligned */
+                    //         justify-content: center;
+                    //         align-items: center;
+                    //         height: 30px;
+                    //     }
 
-                        .edit-btn {
-                            background-color: #007bff;
-                            color: white;
+                    //     .edit-btn {
+                    //         background-color: #007bff;
+                    //         color: white;
+                    //         width: 1rem !important;
 
-                            &:hover {
-                                background-color: #0056b3;
-                            }
-                        }
+                    //         &:hover {
+                    //             background-color: #0056b3;
+                    //         }
+                    //     }
 
-                        .delete-btn {
-                            background-color: #e9574d;
-                            color: white;
+                    //     .delete-btn {
+                    //         background-color: #e9574d;
+                    //         color: white;
+                    //         padding: 5px;
 
-                            &:hover {
-                                background-color: #d32f2f;
-                            }
-                        }
+                    //         &:hover {
+                    //             background-color: #d32f2f;
+                    //         }
+                    //     }
 
-                        .dealerTSE-table .table-container .table tbody td.action-btn button {
-                            // padding: 0px;
-                        }
-                    }
+                    //     .dealerTSE-table .table-container .table tbody td.action-btn button {
+                    //         // padding: 0px;
+                    //     }
+                    // }
+
                 }
             }
         }
     }
-
+    
 
     .pagination {
         margin-top: 20px;

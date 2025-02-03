@@ -1,25 +1,44 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
-
+import axios from "axios";
+import config from '../../config'
+const backend_url = config.backend_url
 const AdminLogin = () => {
   const [selectedRole, setSelectedRole] = useState('Employees');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (selectedRole === 'Employees' && email === 'admin@gmail.com' && password === '123') {
-      // Save authentication state in localStorage
-      localStorage.setItem('isAuthenticated', 'true');
-      navigate('/dashboard'); 
-    } else {
-      setError('Invalid email or password');
-    }
-  };
+  const handleSubmit = async (e) => {
+   e.preventDefault();
+
+   try {
+     const response = await axios.post(`${backend_url}/login-admin`, {
+       email,
+       password
+     });
+
+     if (response.status === 200) {
+       // Save authentication state in localStorage
+       localStorage.setItem('isAuthenticated', 'true');
+       navigate('/dashboard');
+     }
+   } catch (error) {
+     console.error("Login error:", error);
+
+     if (error.response) {
+       // The server responded with a status other than 200
+       setError(error.response.data.message || "Invalid email or password");
+     } else {
+       // Network error or some other issue
+       setError("An error occurred. Please try again.");
+     }
+   }
+ };
+
 
   return (
     <div className="container">
@@ -39,19 +58,19 @@ const AdminLogin = () => {
             <input
               type="text"
               placeholder="Email"
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)}  
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <input
               type="password"
               placeholder="Password"
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)}  
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <button type="submit">Login</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}  
+            {error && <p style={{ color: 'red' }}>{error}</p>}
           </form>
         </div>
       </div>
